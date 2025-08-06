@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>✨ Revenu Complémentaire – Méthode discrète</title>
+  <meta name="description" content="Gagnez un revenu sans vendre. Appel découverte gratuit en 15 min." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3c72;
+      --secondary: #2a5298;
+      --accent: #D4AF37; /* doré mat */
+      --dark: #0f1828;
+      --light: #ffffff;
+      --gray: #717c89;
+      --shadow: 0 8px 30px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f8f9ff, #f0f2f5);
+      color: var(--dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 70px 20px 40px;
+      animation: fadeInUp 1s ease;
+    }
+    header h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 14px;
+      position: relative;
+      display: inline-block;
+    }
+    header h1::after {
+      content: "✨";
+      position: absolute;
+      top: -10px;
+      right: -25px;
+      font-size: 1.5rem;
+      animation: float 3s infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+    header p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    .countdown {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      margin: 18px auto;
+      box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 30px 0;
+    }
+    .text-section {
+      flex: 1;
+      min-width: 100%;
+    }
+    @media (min-width: 768px) {
+      .text-section {
+        min-width: 300px;
+      }
+    }
+    .text-section h2 {
+      font-size: 1.6rem;
+      margin: 25px 0 16px;
+      color: var(--primary);
+      font-weight: 600;
+      animation: slideInLeft 0.8s ease;
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .text-section p {
+      margin-bottom: 14px;
+      color: #444;
+      font-size: 1rem;
+    }
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 28px 0;
+    }
+    @media (min-width: 600px) {
+      .features {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
+      cursor: default;
+    }
+    .feature:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .feature::before {
+      content: "✅";
+      font-weight: bold;
+    }
+    .testimonials {
+      margin: 40px 0;
+    }
+    .testimonials h3 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      position: relative;
+    }
+    .testimonials h3::after {
+      content: "💬";
+      position: absolute;
+      left: -30px;
+      top: 0;
+    }
+    .testimonial {
+      background: white;
+      padding: 18px;
+      border-left: 4px solid var(--accent);
+      margin: 14px 0;
+      font-style: italic;
+      color: #555;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .testimonial:hover {
+      transform: scale(1.02);
+      border-left-color: var(--secondary);
+    }
+    .testimonial strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .form-section {
+      flex: 1;
+      min-width: 100%;
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid #e5e7eb;
+      animation: fadeInRight 0.8s ease;
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @media (min-width: 768px) {
+      .form-section {
+        min-width: 340px;
+        padding: 36px;
+      }
+    }
+    .form-section h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+      position: relative;
+    }
+    .form-section h2::after {
+      content: "📞";
+      position: absolute;
+      right: -30px;
+      top: 0;
+    }
+    .form-section p {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--gray);
+      margin-bottom: 22px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    .form-group input:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.15);
+    }
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::after {
+      content: "🚀";
+      position: absolute;
+      right: 15px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(30, 60, 114, 0.25);
+    }
+    .btn:hover::after {
+      opacity: 1;
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    footer {
+      text-align: center;
+      padding: 35px 20px 20px;
+      color: var(--gray);
+      font-size: 0.85rem;
+      margin-top: 40px;
+    }
+    footer a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === Page de remerciement animée === */
+    #remerciement {
+      display: none;
+      text-align: center;
+      padding: 70px 20px;
+      background: linear-gradient(135deg, #0f1b3a, #1e3c72);
+      color: white;
+      border-radius: 20px;
+      margin: 30px 10px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: zoomIn 0.6s ease;
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    #remerciement h2 {
+      font-size: 2.3rem;
+      margin-bottom: 14px;
+      background: linear-gradient(to right, #a8dadc, #45b7d1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #remerciement p {
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.95;
+      line-height: 1.8;
+    }
+    #remerciement::before {
+      content: "🎉";
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Formulaire -->
+  <div id="formulaire">
+    <div class="container">
+      <header>
+        <h1>La liberté financière commence ici</h1>
+        <p>Une méthode discrète pour générer un revenu complémentaire — sans rien vendre. 💡</p>
+      </header>
+
+      <div class="countdown">
+        🔒 50 places restantes
+      </div>
+
+      <div class="content">
+        <div class="text-section">
+          <h2>Et si vous pouviez gagner de l’argent… sans devenir vendeur ? 🤫</h2>
+          <p>Ce n’est ni du marketing agressif, ni du trading, ni une arnaque.</p>
+          <p>C’est un <span class="highlight">système silencieux</span>, utilisé par des milliers de personnes discrètes à travers le monde. 🌍</p>
+
+          <div class="features">
+            <div class="feature">Pas de produit à vendre 🚫</div>
+            <div class="feature">Travaillez depuis chez vous 🏡</div>
+            <div class="feature">Accompagnement humain (Bachir, Juliette, Ingrid) 👥</div>
+            <div class="feature">Aucune compétence technique requise 🧠</div>
+          </div>
+
+          <div class="testimonials">
+            <h3>Ils ont testé. Ils gagnent. 💬</h3>
+            <div class="testimonial">
+              "Après 3 appels, j’ai vu mes premiers paiements. Aucune pression, juste du partage." 🌱  
+              <br><strong>– Lina, 34 ans</strong>
+            </div>
+            <div class="testimonial">
+              "J’ai dit non 2 fois avant d’essayer. Aujourd’hui, +380€/mois sans effort. 😅"  
+              <br><strong>– Thomas, 41 ans</strong>
+            </div>
+            <div class="testimonial">
+              "Ingrid m’a tout expliqué en 12 minutes. Je n’ai jamais rien vendu. 🙌"  
+              <br><strong>– Amélie, 29 ans</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Réservez votre appel découverte 📞</h2>
+          <p>15 minutes – Sans engagement – 100 % confidentiel</p>
+
+          <form action="https://formsubmit.co/revenucomplementaire974@gmail.com" method="POST" onsubmit="afficherRemerciement(event)">
+            <div class="form-group">
+              <label for="name">Prénom ✍️</label>
+              <input type="text" name="Prénom" placeholder="Votre prénom" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email 📧</label>
+              <input type="email" name="Email" placeholder="votre@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Téléphone 📱</label>
+              <input type="tel" name="Téléphone" placeholder="06 12 34 56 78" />
+            </div>
+            <input type="hidden" name="_next" value="#remerciement">
+            <input type="hidden" name="_autoresponse" value="Merci ! Nous vous recontacterons sous 24h pour votre appel découverte. 💌">
+            <button type="submit" class="btn">👉 Réserver mon appel gratuit 🚀</button>
+          </form>
+        </div>
+      </div>
+
+      <footer>
+        <p>© 2025 – Tous droits réservés | <a href="#">Politique de confidentialité</a></p>
+        <p><small>Vous recevrez un email ou appel dans les 24h. Désabonnement à tout moment. 🛑</small></p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Page de remerciement animée -->
+  <div id="remerciement">
+    <h2>Merci ! 🎉</h2>
+    <p>Votre demande a été envoyée. Un membre de l’équipe (Bachir, Juliette ou Ingrid) vous contactera sous 24h pour organiser votre appel découverte. 📞</p>
+  </div>
+
+  <script>
+    // Compte à rebours interactif
+    let count = 50;
+    const el = document.querySelector('.countdown');
+    const interval = setInterval(() => {
+      count--;
+      if (count > 0) {
+        el.textContent = `🔒 ${count} places restantes`;
+      } else {
+        clearInterval(interval);
+        el.textContent = '✅ COMPLET – Session fermée';
+        el.style.background = '#ef4444';
+        el.style.animation = 'none';
+      }
+    }, 6000); // Change toutes les 6 secondes
+
+    // Animation d'apparition au scroll
+    const elements = document.querySelectorAll('.feature, .testimonial, .form-section, header h1, header p');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    elements.forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Afficher le remerciement avec animation
+    function afficherRemerciement(e) {
+      e.preventDefault();
+      setTimeout(() => {
+        document.getElementById('formulaire').style.display = 'none';
+        document.getElementById('remerciement').style.display = 'block';
+        window.scrollTo(0, 0);
+      }, 600);
+      e.target.submit();
+    }
+  </script>
+
+</body>
+</html>
